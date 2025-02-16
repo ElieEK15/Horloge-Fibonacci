@@ -1,0 +1,42 @@
+from p5 import *
+from datetime import *
+from random import *
+
+def setup():
+    """
+    Initialise la fenêtre avec un fond noir et un taux de rafraîchissement de 1 image par seconde.
+    """
+    createCanvas(730, 200)  # Taille de la fenêtre adaptée à l'affichage de l'horloge
+    background(0)  # Fond noir
+    frameRate(1)  # Mise à jour chaque seconde pour afficher l'heure en temps réel
+
+def draw():
+    """
+    Met à jour l'affichage de l'horloge à chaque seconde.
+    """
+    background(0)  # Efface l'écran à chaque rafraîchissement
+
+    # Récupère l'heure actuelle
+    now = datetime.now()
+    heures = now.hour
+    minutes = now.minute
+    secondes = now.second
+
+    # Affichage des chiffres de l'heure
+    # Les dizaines et unités de chaque composante (heures, minutes, secondes) sont affichées séparément
+    afficher_chiffre(heures // 10, 20,(0,255,0))    # Chiffre des dizaines des heures
+    afficher_chiffre(heures % 10, 120,(0,255,0))    # Chiffre des unités des heures
+    afficher_chiffre(minutes // 10, 240,(0,255,0))  # Chiffre des dizaines des minutes
+    afficher_chiffre(minutes % 10, 340,(0,255,0))   # Chiffre des unités des minutes
+    afficher_chiffre(secondes // 10, 460,(0,255,0)) # Chiffre des dizaines des secondes
+    afficher_chiffre(secondes % 10, 560,(0,255,0))  # Chiffre des unités des secondes
+
+    # Affichage des deux-points (:) entre les heures, minutes et secondes
+    fill(0, 255, 0)  # Vert fluo pour correspondre au style des chiffres
+
+    # Affiche deux points pour séparer les heures, minutes et secondes
+    for x in [260, 485]:  # Coordonnées X des séparateurs
+        ellipse(x, 85, 10, 10)  # Point supérieur
+        ellipse(x, 145, 10, 10) # Point inférieur
+
+run()
