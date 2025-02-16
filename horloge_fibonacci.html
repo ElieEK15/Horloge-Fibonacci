@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horloge Fibonacci</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #fibonacciClock {
+            border: 1px solid black;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Horloge Fibonacci</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="horloge_fibonacci.html">Horloge Fibonacci</a></li>
+                <li><a href="horloge_digitale.html">Horloge Digitale</a></li>
+                <li><a href="group_members.html">Membres du groupe</a></li>
+                <li><a href="presentation.html">Présentation</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Horloge de Fibonacci</h2>
+        <canvas id="fibonacciClock" width="750" height="500"></canvas> 
+    </main>
+    <script>
+        const squares = [
+            {x: 310, y: 100, size: 295}, // 5
+            {x: 130, y: 220, size: 175}, // 3
+            {x: 130, y: 100, size: 115}, // 2
+            {x: 250, y: 160, size: 55},  // 1
+            {x: 250, y: 100, size: 55}   // 1
+        ];
+        const values = [5, 3, 2, 1, 1]; 
+
+        function updateClock() {
+            const canvas = document.getElementById('fibonacciClock');
+            const ctx = canvas.getContext('2d');
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            
+            const now = new Date();
+            const isPM = now.getHours() >= 12;
+            const hour = now.getHours() % 12;
+            const minute = Math.floor(now.getMinutes() / 5);
+
+            const hourList = methode(hour);
+            const minuteList = methode(minute);
+
+            // Set background color based on AM or PM
+            ctx.fillStyle = isPM ? 'rgb(48, 25, 100)' : 'rgb(249, 231, 64)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the squares with the appropriate colors
+            for (let i = 0; i < 5; i++) {
+                if (hourList[i] && minuteList[i]) {
+                    ctx.fillStyle = 'blue'; // Bleu pour les heures et les minutes
+                } else if (hourList[i]) {
+                    ctx.fillStyle = 'red'; // Rouge pour les heures
+                } else if (minuteList[i]) {
+                    ctx.fillStyle = 'green'; // Vert pour les minutes
+                } else {
+                    ctx.fillStyle = 'white'; // Blanc pour les cases vides
+                }
+
+                ctx.fillRect(squares[i].x, squares[i].y, squares[i].size, squares[i].size);
+            }
+        }
+
+        function methode(duree) {
+            const L = [0, 0, 0, 0, 0];
+            for (let i = 0; i < 5; i++) {
+                if (duree >= values[i]) {
+                    duree -= values[i];
+                    L[i] = 1;
+                }
+            }
+            return L;
+        }
+
+        // Met a jour l'horloge toutes les secondes
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
