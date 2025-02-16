@@ -21,7 +21,55 @@
     </header>
     <main>
         <h2>Horloge Digitale</h2>
-        <div id="digitalClock"></div>
+        <!-- Here the clock will be displayed -->
+        <canvas id="digitalClockCanvas" width="730" height="200"></canvas>
     </main>
+    
+    <script>
+        // Functions to handle the digital clock rendering
+        function setup() {
+            // Initialize canvas and set the background color
+            const canvas = document.getElementById('digitalClockCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            setInterval(draw, 1000);
+        }
+
+        function draw() {
+            // Get current time
+            const now = new Date();
+            const heures = now.getHours();
+            const minutes = now.getMinutes();
+            const secondes = now.getSeconds();
+
+            const ctx = document.getElementById('digitalClockCanvas').getContext('2d');
+            ctx.clearRect(0, 0, 730, 200); // Clear the canvas before redrawing
+
+            // Set background color
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, 730, 200);
+
+            // Set text color and font
+            ctx.fillStyle = 'lime';
+            ctx.font = '80px Arial';
+
+            // Display hours, minutes, and seconds
+            ctx.fillText(formatTime(heures), 20, 120);   // Display hours
+            ctx.fillText(formatTime(minutes), 240, 120);  // Display minutes
+            ctx.fillText(formatTime(secondes), 460, 120); // Display seconds
+
+            // Display colons (":") between hours, minutes, and seconds
+            ctx.fillText(":", 210, 120);
+            ctx.fillText(":", 430, 120);
+        }
+
+        function formatTime(time) {
+            // Format time to always show 2 digits (e.g., 03 instead of 3)
+            return time < 10 ? '0' + time : time;
+        }
+
+        setup(); // Initialize the clock when the page is loaded
+    </script>
 </body>
 </html>
