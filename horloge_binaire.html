@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horloge Binaire</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script>
+        function setup() {
+            createCanvas(400, 300);
+            frameRate(1); // Mettre à jour une fois par seconde
+        }
+        
+        function draw() {
+            background(255);
+            let now = new Date();
+            
+            let heures = now.getHours().toString(2).padStart(6, '0');
+            let minutes = now.getMinutes().toString(2).padStart(6, '0');
+            let secondes = now.getSeconds().toString(2).padStart(6, '0');
+            
+            afficherBinaire(heures, 50, "H");
+            afficherBinaire(minutes, 150, "M");
+            afficherBinaire(secondes, 250, "S");
+        }
+        
+        function afficherBinaire(bits, y, label) {
+            fill(0);
+            textSize(20);
+            text(label, 20, y + 10);
+            
+            for (let i = 0; i < 6; i++) {
+                let x = 80 + i * 50;
+                fill(bits[i] === "1" ? 'lime' : 200);
+                ellipse(x, y, 30, 30);
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Horloge Binaire</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="horloge_fibonacci.html">Horloge Fibonacci</a></li>
+                <li><a href="horloge_digitale.html">Horloge Digitale</a></li>
+                <li><a href="horloge_binaire.html">Horloge Binaire</a></li>
+                <li><a href="group_members.html">Membres du groupe</a></li>
+                <li><a href="presentation.html">Présentation</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Horloge Binaire</h2>
+        <p>Cette horloge affiche l'heure sous forme binaire avec des cercles allumés ou éteints.</p>
+        <div id="sketch-holder"></div>
+    </main>
+</body>
+</html>
